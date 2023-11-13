@@ -139,14 +139,7 @@
 
             </div>
             <div id="playersection">
-                <div class="playercard" style="animation: 0.3s ease 0ms 1 normal forwards running slideIn;"><div class="namesection"><h4>Tony Stark</h4>
-                    <p>Nov 13 2023, 01:29:19 </p></div><div>USA</div><div>285</div><div class="deletesection"><button>🗑</button>
-                    <button>+5</button>
-                    <button>-5</button></div></div>
-                <div class="playercard" style="animation: 0.3s ease 0ms 1 normal forwards running slideIn;"><div class="namesection"><h4>shah islam</h4>
-                    <p>Nov 13 2023, 01:28:00 </p></div><div>India</div><div>199</div><div class="deletesection"><button>🗑</button>
-                    <button>+5</button>
-                    <button>-5</button></div></div>
+
             </div>
         </div>
     </div>
@@ -185,7 +178,7 @@
             }
             
         };
-        function createacard(array){ // Player card creation and updation
+        function createacard1(array){ // Player card creation and updation
             const card = document.createElement('div');
             card.classList.add('playercard');
             const name = document.createElement('div');
@@ -206,6 +199,50 @@
             cardsection.append(card);
             card.children[3].addEventListener('click', onContainerClick);
         }
+        function createacard1(array){ // Player card creation and updation
+            const card = document.createElement('div');
+            card.classList.add('playercard');
+            const name = document.createElement('div');
+            name.classList.add('namesection');
+            const country = document.createElement('div');
+            const score = document.createElement('div');
+            const deletethings = document.createElement('div');
+            deletethings.classList.add('deletesection');
+            const date = currentDate();
+            name.innerHTML = `<h4>Tony Stark</h4>
+                        <p>${date}</p>`;
+            country.innerHTML = `USA`;
+            score.innerHTML = `250`;
+            deletethings.innerHTML = `<button>🗑</button>
+                        <button>+5</button>
+                        <button>-5</button>`;
+            card.append(name, country, score, deletethings);
+            cardsection.append(card);
+            card.children[3].addEventListener('click', onContainerClick);
+        }
+        function createacard2(array){ // Player card creation and updation
+            const card = document.createElement('div');
+            card.classList.add('playercard');
+            const name = document.createElement('div');
+            name.classList.add('namesection');
+            const country = document.createElement('div');
+            const score = document.createElement('div');
+            const deletethings = document.createElement('div');
+            deletethings.classList.add('deletesection');
+            const date = currentDate();
+            name.innerHTML = `<h4>Shah Islam</h4>
+                        <p>${date}</p>`;
+            country.innerHTML = `India`;
+            score.innerHTML = `199`;
+            deletethings.innerHTML = `<button>🗑</button>
+                        <button>+5</button>
+                        <button>-5</button>`;
+            card.append(name, country, score, deletethings);
+            cardsection.append(card);
+            card.children[3].addEventListener('click', onContainerClick);
+        }
+        createacard1(arry);
+        createacard2(arry);
         const cardsContainer = document.getElementById('playersection');
         const sortLeaderBoard = () => {
             const cards = document.querySelectorAll(".playercard");
