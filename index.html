@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,700;1,800&family=Exo+2:wght@300&family=Nova+Square&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container{
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        h3{
+            font-size: 3rem;
+            color: #000000;
+            text-align: center;
+            margin-top: 5%;
+            font-family: 'Anton', sans-serif;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-family: 'Exo 2', sans-serif;
+            font-family: 'Nova Square', sans-serif;
+        }
+        .main{
+            margin-top: 2%;
+            width: 65%;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        #searchsection{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        input{
+            font-size: 14px;
+            padding: 8px;
+            outline: 1px solid rgb(57, 202, 144);
+            border: none;
+        }
+        button{
+            font-size: 14px;
+            background-color: rgb(64, 206, 149);
+            padding: 10px 10px;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            border-radius: 6px;
+            user-select: none;
+        }
+        button:active{
+            transform: scale(.97) 
+        }
+        button:hover{
+            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.474);
+        }
+        #playersection{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        .playercard{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            background-color: rgb(64, 206, 149);
+            height: 14vh;
+            box-shadow: 0px 0px 10px rgb(11, 80, 53);
+        }
+        .namesection{
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .deletesection{
+            width: 20%; display: flex; justify-content: space-between; align-items: center
+        }
+        @media only screen and (max-width: 500px) {
+            #searchsection{
+                flex-direction: column;
+                row-gap: 6px;
+            }
+            .playercard{
+                flex-direction: column;
+                height: 30vh;
+                align-items: center;
+                border-radius: 6px;
+            }
+            .deletesection{
+                width: auto;
+                gap: 6px;
+            }
+            h3{
+                font-size: 2rem;
+            }
+        }
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .playercard {
+            animation: slideIn 0.3s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>LEADERBOARD</h3>
+        <div class="main">
+            <div id="searchsection">
+                <input type="text" name="firstname" placeholder="First Name">
+                <input type="text" name="lastname" placeholder="Last Name">
+                <input type="text" name="country" placeholder="Country">
+                <input type="number" name="playerscore" placeholder="Player Score" min="0">
+                <button id="btn">Add Player</button>
+            </div>
+            <div id="playersection">
+                
+            </div>
+        </div>
+    </div>
+    <script>
+        const searchbar = document.getElementById('searchsection');
+        let cardsection = document.getElementById('playersection');
+        console.log(searchbar.children);
+        const arry = searchbar.children;
+        function currentDate(){ // Current Date
+            const formattedDate = new Date().toLocaleString('en-US', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+            }).replace(",", "").replace(/\//g, ' ').replace("AM", "").replace("PM", "");
+
+            return formattedDate;
+        }
+        const onContainerClick = (e) => {
+            const btn = e.target;
+            const card = btn.parentElement.parentElement;
+            const btnText = e.target.innerText
+            if(btnText === "🗑"){
+                btn.parentElement.parentElement.remove();
+                sortLeaderBoard();
+            }else if(btnText === "+5"){
+                card.children[2].innerText = parseInt(card.children[2].innerText)+5;
+                sortLeaderBoard();
+            }else if(btnText === "-5"){
+                if(parseInt(card.children[2].innerText)>=5){
+                    card.children[2].innerText = parseInt(card.children[2].innerText)-5;
+                    sortLeaderBoard();
+                }
+            }
+            
+        };
+        function createacard(array){ // Player card creation and updation
+            const card = document.createElement('div');
+            card.classList.add('playercard');
+            const name = document.createElement('div');
+            name.classList.add('namesection');
+            const country = document.createElement('div');
+            const score = document.createElement('div');
+            const deletethings = document.createElement('div');
+            deletethings.classList.add('deletesection');
+            const date = currentDate();
+            name.innerHTML = `<h4>${array[0].value} ${array[1].value}</h4>
+                        <p>${date}</p>`;
+            country.innerHTML = `${array[2].value}`;
+            score.innerHTML = `${array[3].value}`;
+            deletethings.innerHTML = `<button>🗑</button>
+                        <button>+5</button>
+                        <button>-5</button>`;
+            card.append(name, country, score, deletethings);
+            cardsection.append(card);
+            card.children[3].addEventListener('click', onContainerClick);
+        }
+        const cardsContainer = document.getElementById('playersection');
+        const sortLeaderBoard = () => {
+            const cards = document.querySelectorAll(".playercard");
+            const cardsArray = Array.from(cards);
+            cardsArray.sort((card1, card2) => {
+                const score1 = parseInt(card1.children[2].innerText);
+                const score2 = parseInt(card2.children[2].innerText);
+                if (score1 > score2) {
+                    return -1;
+                } else if (score2 > score1) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+
+            cardsArray.forEach((element, index) => {
+                cardsContainer.appendChild(element);
+
+                // Apply the animation on sorted cards
+                element.style.animation = `slideIn 0.3s ease forwards ${index * 100}ms`;
+            });
+        }
+        arry[4].addEventListener('click',(e)=>{ // listener for add player button to add a card in playersection
+            e.preventDefault();
+            if(arry[0].value !== "" && arry[1].value !== "" && arry[2].value !== "" && arry[3].value !== ""){
+                createacard(arry);
+                arry[0].value = "";
+                arry[1].value = "";
+                arry[2].value = "";
+                arry[3].value = "";
+                sortLeaderBoard();
+            }
+        });
+        
+    </script>
+</body>
+</html>
