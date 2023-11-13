@@ -118,6 +118,10 @@
         .playercard {
             animation: slideIn 0.3s ease forwards;
         }
+        #alert{
+            text-align: center;
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -131,8 +135,18 @@
                 <input type="number" name="playerscore" placeholder="Player Score" min="0">
                 <button id="btn">Add Player</button>
             </div>
+            <div id="alert">
+
+            </div>
             <div id="playersection">
-                
+                <div class="playercard" style="animation: 0.3s ease 0ms 1 normal forwards running slideIn;"><div class="namesection"><h4>Tony Stark</h4>
+                    <p>Nov 13 2023, 01:29:19 </p></div><div>USA</div><div>285</div><div class="deletesection"><button>🗑</button>
+                    <button>+5</button>
+                    <button>-5</button></div></div>
+                <div class="playercard" style="animation: 0.3s ease 0ms 1 normal forwards running slideIn;"><div class="namesection"><h4>shah islam</h4>
+                    <p>Nov 13 2023, 01:28:00 </p></div><div>India</div><div>199</div><div class="deletesection"><button>🗑</button>
+                    <button>+5</button>
+                    <button>-5</button></div></div>
             </div>
         </div>
     </div>
@@ -214,16 +228,24 @@
                 // Apply the animation on sorted cards
                 element.style.animation = `slideIn 0.3s ease forwards ${index * 100}ms`;
             });
+            cardsArray.forEach((element)=>{
+                console.log(element);
+            });
+            
         }
+        const alert = document.getElementById('alert');
         arry[4].addEventListener('click',(e)=>{ // listener for add player button to add a card in playersection
             e.preventDefault();
             if(arry[0].value !== "" && arry[1].value !== "" && arry[2].value !== "" && arry[3].value !== ""){
+                alert.innerHTML = "";
                 createacard(arry);
                 arry[0].value = "";
                 arry[1].value = "";
                 arry[2].value = "";
                 arry[3].value = "";
                 sortLeaderBoard();
+            }else{
+                alert.innerHTML = "All Fields Required";
             }
         });
         
